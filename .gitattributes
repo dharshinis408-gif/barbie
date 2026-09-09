@@ -1,2 +1,434 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+----------8th prg--------
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+struct Node{
+int data;
+struct Node*left;
+struct Node*right;
+};
+struct Node*createNode(int data){
+struct Node*newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = data;
+newNode->left = NULL;
+newNode->right = NULL;
+return newNode;
+}                                                                                                                                                              
+void inorderTraversal(struct Node*root){
+if(root != NULL){
+inorderTraversal(root->left);
+printf("%d",root->data);
+inorderTraversal(root->right);
+}
+}                                                     
+void preorderTraversal(struct Node*root){
+if(root!=NULL){
+printf("%d",root->data);
+preorderTraversal(root->left);
+preorderTraversal(root->right);
+}
+}
+void postorderTraversal(struct Node*root){
+if(root !=NULL){
+postorderTraversal(root->left);
+postorderTraversal(root->right);
+printf("%d",root->data);
+}
+}
+int main(){
+
+struct Node * root = createNode(1);
+root->left = createNode(2);
+root->right = createNode(3);
+root->left->left= createNode(4);
+root->left->right = createNode(5);
+printf("Inorder Traversal:");
+inorderTraversal(root);
+printf("\n");
+printf("Preorder Traversal:");
+preorderTraversal(root);
+printf("\n");
+printf("Postorder Traversal:");
+postorderTraversal(root);
+printf("\n");
+getch();
+return 0;
+}
+
+----------9th prg---------
+#include<stdio.h>
+int main() {
+int array[100],n,i,key,found=0;
+printf("Enter number of elements in array:");
+scanf("%d",&n);
+printf("Enter %d elements:\n",n);
+for(i=0;i<n;i++){
+scanf("%d",&array[i]);
+}
+printf("Enter the element to search:");
+scanf("%d",&key);
+for(i=0;i<n;i++){
+if(array[i]==key){
+printf("Element found at position %d(index %d)\n",i+1,i);
+found = 1;
+break;
+}
+}
+if(!found){
+printf("Element not found in the array.\n");
+}
+return 0;
+}
+
+-----------10th prg--------
+#include<stdio.h>
+int main() {
+int array[100],n,i,key,found=0;
+printf("Enter number of elements in array:");
+scanf("%d",&n);
+printf("Enter %d elements:\n",n);
+for(i=0;i<n;i++){
+scanf("%d",&array[i]);
+}
+printf("Enter the element to search:");
+scanf("%d",&key);
+for(i=0;i<n;i++){
+if(array[i]==key){
+printf("Element found at position %d(index %d)\n",i+1,i);
+found = 1;
+break;
+}
+}
+if(!found){
+printf("Element not found in the array.\n");
+}
+return 0;
+}
+
+----------11th prg---------
+#include<stdio.h>
+#define MAX 100 
+ void displayArray(int arr[], int n); 
+void insertionSort(int arr[], int n);  
+int main() {    
+ int arr[MAX];    
+ int n, i;    
+  printf("=========================================\n");  
+   printf("            INSERTION SORT\n");  
+   printf("=========================================\n");     
+ printf("Enter number of elements: ");   
+  scanf("%d", &n);     
+ printf("Enter %d numbers:\n", n);    
+ for (i = 0; i < n; i++) {     
+    printf("Element [%d]: ", i);     
+    scanf("%d", &arr[i]);    
+ }     
+ printf("\nBefore sorting: ");  
+   displayArray(arr, n);     
+ insertionSort(arr, n);     
+ printf("After sorting : "); 
+    displayArray(arr, n);      
+return 0; 
+} 
+ void displayArray(int arr[], int n) {   
+  int i;    
+ for (i = 0; i < n; i++)        
+ printf("%d ", arr[i]);    
+ printf("\n"); 
+} 
+  void insertionSort(int arr[], int n) {  
+   int i, key, j;   
+  for (i = 1; i < n; i++) {    
+     key = arr[i];       
+  j = i - 1;        
+  while (j >= 0 && arr[j] > key) {           
+  arr[j + 1] = arr[j];           
+  j--;        
+ }      
+   arr[j + 1] = key;    
+ } 
+}
+
+
+-----------------12 prg-------------
+#include <stdio.h>
+#define MAX 100
+void displayArray(int arr[], int n);
+void quickSort(int arr[], int low, int high);
+int partition(int arr[], int low, int high);
+int main() {
+ int arr[MAX];
+ int n, i;
+ printf("=========================================\n");
+ printf(" QUICK SORT\n");
+ printf("=========================================\n");
+ printf("Enter number of elements: ");
+ scanf("%d", &n);
+ printf("Enter %d numbers:\n", n);
+ for (i = 0; i < n; i++) {
+ printf("Element [%d]: ", i);
+ scanf("%d", &arr[i]);
+ }
+ printf("\nBefore sorting: ");
+ displayArray(arr, n);
+ quickSort(arr, 0, n - 1);
+printf("After sorting : ");
+ displayArray(arr, n);
+ return 0;
+}
+void displayArray(int arr[], int n) {
+ int i;
+ for (i = 0; i < n; i++)
+ printf("%d ", arr[i]);
+ printf("\n");
+}
+void quickSort(int arr[], int low, int high) {
+ int pivotIndex;
+ if (low < high) {
+ pivotIndex = partition(arr, low, high);
+ quickSort(arr, low, pivotIndex - 1);
+ quickSort(arr, pivotIndex + 1, high);
+ }
+}
+int partition(int arr[], int low, int high) {
+ int pivot = arr[high];
+ int i = low - 1;
+ int j, temp;
+for (j = low; j < high; j++) {
+ if (arr[j] <= pivot) {
+ i++;
+ temp = arr[i];
+ arr[i] = arr[j];
+ arr[j] = temp;
+ }
+ }
+ temp = arr[i + 1];
+ arr[i + 1] = arr[high];
+ arr[high] = temp;
+ return i + 1;
+}
+
+
+------------------13 prg--------------
+#include <stdio.h>
+
+#define MAX 100
+
+void displayArray(int arr[], int n);
+void radixSort(int arr[], int n);
+int getMax(int arr[], int n);
+void countSortByDigit(int arr[], int n, int place);
+void copyArray(int source[], int dest[], int n);
+
+int main()
+{
+    int arr[MAX];
+    int n, i;
+
+    printf("=========================================\n");
+    printf("              RADIX SORT\n");
+    printf("=========================================\n");
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter %d non-negative numbers:\n", n);
+
+    for (i = 0; i < n; i++)
+    {
+        printf("Element [%d]: ", i);
+        scanf("%d", &arr[i]);
+    }
+
+    printf("\nBefore sorting: ");
+    displayArray(arr, n);
+
+    radixSort(arr, n);
+
+    printf("After sorting : ");
+    displayArray(arr, n);
+
+    return 0;
+}
+
+void displayArray(int arr[], int n)
+{
+    int i;
+
+    for (i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+
+    printf("\n");
+}
+
+void copyArray(int source[], int dest[], int n)
+{
+    int i;
+
+    for (i = 0; i < n; i++)
+        dest[i] = source[i];
+}
+
+int getMax(int arr[], int n)
+{
+    int max = arr[0];
+    int i;
+
+    for (i = 1; i < n; i++)
+    {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+
+    return max;
+}
+
+void countSortByDigit(int arr[], int n, int place)
+{
+    int output[MAX];
+    int count[10] = {0};
+    int i, digit;
+
+    for (i = 0; i < n; i++)
+        count[(arr[i] / place) % 10]++;
+
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+
+    for (i = n - 1; i >= 0; i--)
+    {
+        digit = (arr[i] / place) % 10;
+        output[count[digit] - 1] = arr[i];
+        count[digit]--;
+    }
+
+    copyArray(output, arr, n);
+}
+
+void radixSort(int arr[], int n)
+{
+    int max = getMax(arr, n);
+    int place;
+
+    for (place = 1; max / place > 0; place *= 10)
+        countSortByDigit(arr, n, place);
+}
+
+----------------14 prg-------------
+#include <stdio.h>
+
+#define MAX 100
+
+void displayArray(int arr[], int n);
+
+void heapSort(int arr[], int n);
+
+void heapify(int arr[], int n, int i);
+
+int main() {
+
+ int arr[MAX];
+
+ int n, i;
+
+ printf("=========================================\n");
+
+ printf(" HEAP SORT\n");
+
+ printf("=========================================\n");
+
+ printf("Enter number of elements: ");
+
+ scanf("%d", &n);
+
+ printf("Enter %d numbers:\n", n);
+
+ for (i = 0; i < n; i++) {
+
+ printf("Element [%d]: ", i);
+
+ scanf("%d", &arr[i]);
+
+ }
+
+ printf("\nBefore sorting: ");
+
+ displayArray(arr, n);
+
+ heapSort(arr, n);
+
+ printf("After sorting : ");
+
+ displayArray(arr, n);
+
+ return 0;
+
+}
+
+void displayArray(int arr[], int n) {
+
+ int i;
+
+ for (i = 0; i < n; i++)
+
+ printf("%d ", arr[i]);
+
+ printf("\n");
+
+}
+
+void heapify(int arr[], int n, int i) {
+
+ int largest = i;
+
+ int left = 2 * i + 1;
+
+ int right = 2 * i + 2;
+
+ int temp;
+
+ if (left < n && arr[left] > arr[largest])
+
+ largest = left;
+
+ if (right < n && arr[right] > arr[largest])
+
+ largest = right;
+
+ if (largest != i) {
+
+ temp = arr[i];
+
+ arr[i] = arr[largest];
+
+ arr[largest] = temp;
+
+ heapify(arr, n, largest);
+
+ }
+
+}
+
+ 
+
+void heapSort(int arr[], int n) {
+
+ int i, temp;
+
+ for (i = n / 2 - 1; i >= 0; i--)
+
+ heapify(arr, n, i);
+
+ for (i = n - 1; i > 0; i--) {
+
+ temp = arr[0];
+
+ arr[0] = arr[i];
+
+ arr[i] = temp;
+
+ heapify(arr, i, 0);
+
+ }
+
+}

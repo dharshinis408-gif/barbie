@@ -1,0 +1,938 @@
+---------------1 prg ---------
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+int arr[MAX];
+int n = 0;
+/* ── Function Prototypes ── */
+void inputArray();
+void displayArray();
+void insertElement();
+void deleteElement();
+void printMenu();
+/* ── Main Function ── */
+int main() {
+int choice;
+printf("\n=============================================\n");
+printf(" ARRAY OPERATIONS — DATA STRUCTURES IN C \n");
+printf("=============================================\n");
+do {
+printMenu();
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1: inputArray(); break;
+case 2: displayArray(); break;
+case 3: insertElement(); break;
+case 4: deleteElement(); break;
+case 5:
+printf("\nExiting... Thank you!\n");
+break;
+default:
+printf("Invalid choice! Please select 1-5.\n");
+}
+} while (choice != 5);
+return 0;
+}
+/* ── Menu Display ── */
+void printMenu() {
+printf("\n===== ARRAY OPERATIONS MENU =====\n");
+printf(" 1. Input Array\n");
+printf(" 2. Display Array\n");
+printf(" 3. Insert Element\n");
+printf(" 4. Delete Element\n");
+printf(" 5. Exit\n");
+printf("==================================\n");
+}
+/* ── 1. Input Array ── */
+void inputArray() {
+int i;
+printf("Enter number of elements (max %d): ", MAX);
+scanf("%d", &n);
+if (n <= 0 || n > MAX) {
+printf("Invalid size! Please enter a value between 1 and %d.\n", MAX);
+n = 0;
+return;
+}
+for (i = 0; i < n; i++) {
+printf(" Enter element %d: ", i + 1);
+scanf("%d", &arr[i]);
+}
+printf("Array of %d elements entered successfully.\n", n);
+}
+/* ── 2. Display Array (Traversal) ── */
+
+void displayArray() {
+int i;
+if (n == 0) {
+printf("Array is empty! Please input elements first.\n");
+return;
+}
+printf("Array (n=%d): ", n);
+for (i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+}
+/* ── 3. Insert Element ── */
+void insertElement() {
+int pos, elem, i;
+if (n >= MAX) {
+printf("Array is full! Cannot insert any more elements.\n");
+return;
+}
+printf("Enter position to insert (1 to %d): ", n + 1);
+scanf("%d", &pos);
+if (pos < 1 || pos > n + 1) {
+printf("ERROR: Invalid position! Must be between 1 and %d.\n", n + 1);
+return;
+}
+printf("Enter element to insert: ");
+scanf("%d", &elem);
+/* Shift elements to the right to make space */
+for (i = n - 1; i >= pos - 1; i--) {
+arr[i + 1] = arr[i];
+}
+arr[pos - 1] = elem;
+n++;
+printf("Inserted %d at position %d.\n", elem, pos);
+printf("Array (n=%d): ", n);
+displayArray();
+}
+/* ── 4. Delete Element ── */
+void deleteElement() {
+int pos, i;
+if (n == 0) {
+printf("Array is empty! Nothing to delete.\n");
+return;
+}
+printf("Enter position to delete (1 to %d): ", n);
+scanf("%d", &pos);
+if (pos < 1 || pos > n) {
+printf("ERROR: Invalid position! Must be between 1 and %d.\n", n);
+return;
+}
+printf("Deleted element: %d\n", arr[pos - 1]);
+/* Shift elements to the left to fill the gap */
+for (i = pos - 1; i < n - 1; i++) {
+arr[i] = arr[i + 1];
+}
+n--;
+printf("Array (n=%d): ", n);
+displayArray();
+}
+
+-------------2 prg----------
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+int stack[MAX];
+int top = -1;
+// Function to check if the stack is full
+int isFull() {
+return (top == MAX - 1);
+}
+// Function to check if the stack is empty
+int isEmpty() {
+return (top == -1);
+}
+// Function to push an element onto the stack
+void push(int value) {
+if (isFull()) {
+printf("Stack Overflow! Cannot push %d.\n", value);
+return;
+}
+top++;
+stack[top] = value;
+printf("%d pushed onto stack.\n", value);
+}
+// Function to pop an element from the stack
+int pop() {
+int popped_value;
+if (isEmpty()) {
+printf("Stack Underflow! Cannot pop from an empty stack.\n");
+return -1;
+}
+popped_value = stack[top];
+top--;
+printf("%d popped from stack.\n", popped_value);
+return popped_value;
+}
+// Function to peek at the top element
+int peek() {
+if (isEmpty()) {
+printf("Stack is empty. No element to peek.\n");
+return -1;
+}
+printf("Top element is: %d\n", stack[top]);
+return stack[top];
+}
+// Function to display all stack elements
+void display() {
+int i;
+if (isEmpty()) {
+printf("Stack is empty.\n");
+return;
+}
+printf("Stack elements (bottom to top): ");
+for (i = 0; i <= top; i++) {
+printf("%d ", stack[i]);
+}
+printf("\n");
+}
+// Function to count elements in the stack
+int count() {
+int c = top + 1;
+printf("Total elements in stack: %d\n", c);
+return c;
+}
+// Function to search for an element in the stack
+int search(int key) {
+int i;
+if (isEmpty()) {
+printf("Stack is empty. Cannot search.\n");
+return -1;
+}
+for (i = 0; i <= top; i++) {
+if (stack[i] == key) {
+printf("Element %d found at position %d (from bottom).\n", key, i + 1);
+return i;
+}
+}
+printf("Element %d not found in stack.\n", key);
+return -1;
+}
+int main() {
+int choice, value, key;
+printf("=========================================\n");
+printf(" STACK OPERATIONS (Array-Based)\n");
+printf("=========================================\n");
+do {
+printf("\n1. PUSH\n");
+printf("2. POP\n");
+printf("3. PEEK\n");
+printf("4. DISPLAY\n");
+printf("5. COUNT\n");
+printf("6. SEARCH\n");
+printf("7. EXIT\n");
+printf("=========================================\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter the value to push: ");
+scanf("%d", &value);
+push(value);
+break;
+case 2:
+pop();
+break;
+case 3:
+peek();
+break;
+case 4:
+display();
+break;
+case 5:
+count();
+break;
+case 6:
+printf("Enter the element to search: ");
+scanf("%d", &key);
+search(key);
+break;
+case 7:
+printf("Exiting program. Goodbye!\n");
+printf("=========================================\n");
+break;
+default:
+printf("Invalid choice! Please enter a valid option (1-7).\n");
+}
+} while (choice != 7);
+return 0;
+}
+
+--------------3 prg-----------
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 5
+int queue[MAX];
+int front=-1;
+int rear=-1;
+int isFull(){
+return(rear==MAX-1);
+}
+int isEmpty(){
+return(front==-1 || front>rear);
+}
+void enqueue(int value){
+if (isFull()) {
+printf("Queue Overflow!Cannot enqueue %d.\n",value);
+return;
+}
+if(front == -1){
+front=0;
+}
+rear++;
+queue[rear]=value;
+printf("%d enqueue into the queue.\n",value);
+}
+int dequeue(){
+int dequeued_value;
+if (isEmpty()) {
+printf("Queue Underflow!Cannot dequeue from an empty queue.\n");
+return-1;
+}
+dequeued_value=queue[front];
+front++;
+if(front>rear){
+front=-1;
+rear=-1;
+}
+printf("%d dequeued from the queue.\n",dequeued_value);
+return dequeued_value;
+}
+int peek(){
+if (isEmpty()){
+printf("Queue is empty.No element to peek.\n");
+return-1;
+}
+printf("Front element is: %d\n",queue[front]);
+return queue[front];
+}
+void display(){
+int i;
+if(isEmpty()){
+printf("Queue is empty.\n");
+}else{
+printf("Queue elements(front to rear):");
+for(i = front;i<=rear;i++){
+printf("%d",queue[i]);
+}
+printf("\n");
+}
+printf("FRONT=%d,REAR=%d\n",front,rear);
+}
+int count(){
+int c;
+if (isEmpty()){
+c = 0;
+} else {
+c = rear - front + 1;
+}
+printf("Total elements in queue:%d\n",c);
+return c;
+}
+int search(int key) {
+int i,pos;
+if (isEmpty()){
+printf("Queue is empty.Cannot search.\n");
+return -1 ;
+}
+for (i = front;i<=rear;i++){
+if(queue[i]==key){
+pos=i-front + 1;
+printf("Element %d found at position %d(from front).\n",key,pos);
+return i;
+}
+}
+printf("Element %d not found in queue.\n",key);
+return-1;
+}
+int main(){
+int choice,value,key;
+printf("====================================================================\n");
+printf("QUEUE OPERATIONS (Array-Based)\n");
+printf("=====================================================================\n");
+do{
+printf("\n1.ENQUEUE\n");
+printf("2.DEQUEUE\n");
+printf("3.PEEK\n");
+printf("4.DISPLAY\n");
+printf("5.COUNT\n");
+printf("6.SEARCH\n");
+printf("7.EXIT\n");
+printf("======================================================================\n");
+printf("Enter your choice:");
+scanf("%d",&choice);
+switch(choice){
+case 1:
+printf("Enter the value to enqueue:");
+scanf("%d",&value);
+enqueue(value);
+break;
+case 2:
+dequeue();
+break;
+case 3:
+peek();
+break;
+case 4:
+display();
+break;
+case 5:
+count();
+break;
+case 6:
+printf("Enter the element to search:");
+scanf("%d",&key);
+search(key);
+break;
+case 7:
+printf("Exiting program. Goodbye!\n");
+printf("==========================================================================\n");
+break;
+default:
+printf("Invalid choice! Please enter a valid (1-7).\n");
+}
+}while(choice!=7);
+return 0;
+}
+
+----------4 prg--------
+#include <stdio.h>
+#include <ctype.h>  // for isalnum()
+#include <string.h>
+#include <stdlib.h>
+#define SIZE 100
+
+
+char stack[SIZE];
+int top = -1;
+void push(char ch) {
+    if (top >= SIZE - 1) {
+        printf("Stack overflow\n");
+        return;
+    }
+    stack[++top] = ch;
+}
+char pop() {
+    if (top == -1) {
+        return '\0';
+    }
+    return stack[top--];
+}
+char peek() {
+    if (top == -1) {
+        return '\0';
+    }
+    return stack[top];
+}
+
+int precedence(char ch) {
+    switch (ch) {
+        case '^': return 3;
+        case '*':
+        case '/': return 2;
+        case '+':
+        case '-': return 1;
+        default: return 0;
+    }
+}
+
+void infixToPostfix(char* infix, char* postfix) {
+    int i, k = 0;
+    char ch;
+
+    for (i = 0; infix[i] != '\0'; i++) {
+        ch = infix[i];
+        if (isalnum(ch)) {  // operand
+            postfix[k++] = ch;
+        }
+        else if (ch == '(') {
+            push(ch);
+        }
+        else if (ch == ')') {
+           
+                while (peek() != '(' && top != -1) {
+                postfix[k++] = pop();
+            }
+            pop(); // remove '('
+        }
+        else { // operator
+            while (precedence(ch) <= precedence(peek()) && top != -1) {
+                postfix[k++] = pop();
+            }
+            push(ch);
+        }
+    }
+    // Pop remaining operators
+    while (top != -1) {
+        postfix[k++] = pop();
+    }
+    postfix[k] = '\0';
+}
+int main() {
+    char infix[SIZE], postfix[SIZE];
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+    infixToPostfix(infix, postfix);
+    printf("Postfix expression: %s\n", postfix);
+    return 0;}
+
+    -------------5 prg--------
+    #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+#define MAX_SIZE 100
+
+int stack[MAX_SIZE];
+int top = -1;
+
+// Push operation
+void push(int item)
+{
+    if (top >= MAX_SIZE - 1)
+    {
+        printf("Stack Overflow\n");
+        exit(1);
+    }
+
+    stack[++top] = item;
+}
+
+// Pop operation
+int pop()
+{
+    if (top < 0)
+    {
+        printf("Stack Underflow\n");
+        exit(1);
+    }
+
+    return stack[top--];
+}
+
+// Postfix evaluation function
+int evaluatePostfix(char *exp)
+{
+    int i;
+    int operand1, operand2, result;
+
+    for (i = 0; exp[i] != '\0'; i++)
+    {
+        // If operand, push into stack
+        if (isdigit(exp[i]))
+        {
+            push(exp[i] - '0');
+        }
+        // If operator, perform operation
+        else
+        {
+            operand2 = pop();
+            operand1 = pop();
+
+            switch (exp[i])
+            {
+                case '+':
+                    result = operand1 + operand2;
+                    break;
+
+                case '-':
+                    result = operand1 - operand2;
+                    break;
+
+                case '*':
+                    result = operand1 * operand2;
+                    break;
+
+                case '/':
+                    result = operand1 / operand2;
+                    break;
+
+                default:
+                    printf("Invalid Operator\n");
+                    exit(1);
+            }
+
+            push(result);
+        }
+    }
+
+    return pop();
+}
+
+// Main function
+int main()
+{
+    char postfix[MAX_SIZE];
+
+    printf("Enter a postfix expression: ");
+    scanf("%s", postfix);
+
+    printf("Evaluated Result: %d\n", evaluatePostfix(postfix));
+
+    return 0;
+}
+
+----------6 prg------
+#include<stdio.h>
+void main(){
+int p1[20],p2[20],sum[20];
+int n1,n2,max,i;
+printf("Enter highest degree of first polynomial:");
+scanf("%d",&n1);
+printf("Enter coefficients of first polynomial:\n");
+for(i=n1;i>=0;i--){
+printf("Coefficient of X^%d:",i);
+scanf("%d",&p1[i]);
+}
+printf("Enter highest degree of second polynomial:");
+scanf("%d",&n2);
+printf("Enter coefficient of second polynomial:\n");
+for(i=n2;i>=0;i--){
+printf("Coefficient of X^%d:",i);
+scanf("%d",&p2[i]);
+}
+max = (n1>n2)?n1:n2;
+for(i=0;i<=max;i++){
+if(i>n1)
+p1[i]=0;
+if(i>n2)
+p2[i]=0;
+}
+for(i=0;i<=max;i++)
+sum[i]=p1[i]+p2[i];
+printf("\nResultant Polynomial:\n");
+for(i=max;i>=0;i--){
+printf("%dX^%d",sum[i],i);
+if(i!=0)
+printf("+");
+}
+printf("\n");
+}
+
+----------7 prg--------
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+/* Insert at Beginning */
+void insertBegin(int value)
+{
+    struct Node *newNode;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    if (newNode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+}
+
+/* Insert at End */
+void insertEnd(int value)
+{
+    struct Node *newNode;
+    struct Node *temp;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    if (newNode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    temp = head;
+
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+/* Insert at Position */
+void insertPos(int value, int pos)
+{
+    struct Node *newNode;
+    struct Node *temp;
+    int i;
+
+    if (pos <= 0)
+    {
+        printf("Invalid Position\n");
+        return;
+    }
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    if (newNode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    newNode->data = value;
+
+    if (pos == 1)
+    {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+
+    temp = head;
+
+    for (i = 1; i < pos - 1 && temp != NULL; i++)
+        temp = temp->next;
+
+    if (temp == NULL)
+    {
+        printf("Invalid Position\n");
+        free(newNode);
+        return;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+/* Delete from Beginning */
+void deleteBegin()
+{
+    struct Node *temp;
+
+    if (head == NULL)
+    {
+        printf("List is Empty\n");
+        return;
+    }
+
+    temp = head;
+    head = head->next;
+    free(temp);
+
+    printf("Node Deleted\n");
+}
+
+/* Delete from End */
+void deleteEnd()
+{
+    struct Node *temp;
+    struct Node *prev;
+
+    prev = NULL;
+
+    if (head == NULL)
+    {
+        printf("List is Empty\n");
+        return;
+    }
+
+    if (head->next == NULL)
+    {
+        free(head);
+        head = NULL;
+        printf("Node Deleted\n");
+        return;
+    }
+
+    temp = head;
+
+    while (temp->next != NULL)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    prev->next = NULL;
+    free(temp);
+
+    printf("Node Deleted\n");
+}
+
+/* Delete from Position */
+void deletePos(int pos)
+{
+    struct Node *temp;
+    struct Node *prev;
+    int i;
+
+    prev = NULL;
+
+    if (head == NULL)
+    {
+        printf("List is Empty\n");
+        return;
+    }
+
+    if (pos <= 0)
+    {
+        printf("Invalid Position\n");
+        return;
+    }
+
+    temp = head;
+
+    if (pos == 1)
+    {
+        head = head->next;
+        free(temp);
+        printf("Node Deleted\n");
+        return;
+    }
+
+    for (i = 1; i < pos && temp != NULL; i++)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL)
+    {
+        printf("Invalid Position\n");
+        return;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+
+    printf("Node Deleted\n");
+}
+
+/* Search */
+void search(int value)
+{
+    struct Node *temp;
+    int pos;
+
+    temp = head;
+    pos = 1;
+
+    while (temp != NULL)
+    {
+        if (temp->data == value)
+        {
+            printf("Element found at position %d\n", pos);
+            return;
+        }
+
+        temp = temp->next;
+        pos++;
+    }
+
+    printf("Element not found\n");
+}
+
+/* Display */
+void display()
+{
+    struct Node *temp;
+
+    if (head == NULL)
+    {
+        printf("List is Empty\n");
+        return;
+    }
+
+    temp = head;
+
+    printf("Linked List: ");
+
+    while (temp != NULL)
+    {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("NULL\n");
+}
+
+/* Main Function */
+int main()
+{
+    int choice, value, pos;
+
+    while (1)
+    {
+        printf("\n----- Singly Linked List -----\n");
+        printf("1. Insert Beginning\n");
+        printf("2. Insert End\n");
+        printf("3. Insert Position\n");
+        printf("4. Delete Beginning\n");
+        printf("5. Delete End\n");
+        printf("6. Delete Position\n");
+        printf("7. Search\n");
+        printf("8. Display\n");
+        printf("9. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d",&value);
+                insertBegin(value);
+                break;
+
+            case 2:
+                printf("Enter value: ");
+                scanf("%d",&value);
+                insertEnd(value);
+                break;
+
+            case 3:
+                printf("Enter value and position: ");
+                scanf("%d%d",&value,&pos);
+                insertPos(value,pos);
+                break;
+
+            case 4:
+                deleteBegin();
+                break;
+
+            case 5:
+                deleteEnd();
+                break;
+
+            case 6:
+                printf("Enter position: ");
+                scanf("%d",&pos);
+                deletePos(pos);
+                break;
+
+            case 7:
+                printf("Enter value: ");
+                scanf("%d",&value);
+                search(value);
+                break;
+
+            case 8:
+                display();
+                break;
+
+            case 9:
+                exit(0);
+
+            default:
+                printf("Invalid Choice\n");
+        }
+    }
+
+    
+}
